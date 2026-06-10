@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第六阶段 · 团建带动氛围 & 活跃话题</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #111111;
+    --bg-card2: #161616;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --blue: #4a9eba;
+    --blue-light: #7ec8e3;
+    --cream: #f0ead6;
+    --white: #ffffff;
+    --gray: #888888;
+    --gray-light: #cccccc;
+    --border: #222222;
+    --border2: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    line-height: 1.7;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 48px;
+    background: #0d0d0d;
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: var(--gray);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 3px;
+    background: var(--border2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-count {
+    font-size: 11px;
+    color: var(--red);
+    font-variant-numeric: tabular-nums;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 48px;
+    padding: 80px 40px 64px;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .phase-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 4px 12px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--gray);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    font-variant-numeric: tabular-nums;
+  }
+  .meta-num span { color: var(--red); font-size: 16px; }
+  .meta-label {
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── CHAPTER DIVIDER ── */
+  .chapter-div {
+    max-width: 860px;
+    margin: 64px auto 0;
+    padding: 0 40px;
+  }
+  .chapter-div-inner {
+    border-top: 1px solid var(--border2);
+    padding-top: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .ch-num {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+    flex-shrink: 0;
+  }
+  .ch-title {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .ch-desc {
+    font-size: 14px;
+    color: var(--gray);
+    margin-top: 8px;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin: 40px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  /* Body text */
+  .body-text {
+    font-size: 15px;
+    color: var(--gray-light);
+    line-height: 1.85;
+    margin-bottom: 20px;
+  }
+  .body-text strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+  .body-text .red { color: var(--red-light); }
+
+  /* Core conclusion box */
+  .conclusion-box {
+    background: var(--bg-card);
+    border-left: 3px solid var(--red);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .conclusion-box p {
+    font-size: 16px;
+    color: var(--white);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .conclusion-box .sub {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* Comparison table: wrong vs right */
+  .compare-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 24px 0;
+    background: var(--border);
+  }
+  .compare-col {
+    background: var(--bg-card);
+    padding: 20px 20px;
+  }
+  .compare-header {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border2);
+  }
+  .compare-header.wrong { color: #888; }
+  .compare-header.right { color: var(--red); }
+  .compare-item {
+    font-size: 14px;
+    color: var(--gray-light);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border2);
+    line-height: 1.6;
+  }
+  .compare-item:last-child { border-bottom: none; }
+  .compare-item.strike { text-decoration: line-through; color: #555; font-size: 13px; }
+  .compare-item strong { color: var(--white); }
+  .compare-item .red { color: var(--red-light); }
+  .compare-item .blue { color: var(--blue-light); }
+
+  /* Cards row */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2px;
+    margin: 24px 0;
+    background: var(--border);
+  }
+  .card {
+    background: var(--bg-card);
+    padding: 22px 20px;
+  }
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.75;
+  }
+  .card-body strong { color: var(--gray-light); }
+
+  /* Dialogue box */
+  .dialogue-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border2);
+    margin: 24px 0;
+    overflow: hidden;
+  }
+  .dialogue-header {
+    padding: 12px 20px;
+    background: var(--bg-card2);
+    border-bottom: 1px solid var(--border2);
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dialogue-tag {
+    font-size: 10px;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 2px 8px;
+    letter-spacing: 0.08em;
+  }
+  .dialogue-tag.ok {
+    color: var(--blue-light);
+    border-color: var(--blue-light);
+  }
+  .dialogue-body {
+    padding: 20px;
+  }
+  .line {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .line:last-child { margin-bottom: 0; }
+  .speaker {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    white-space: nowrap;
+    padding-top: 3px;
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+  .speaker.coach { color: var(--red-light); }
+  .speech {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    background: var(--bg-card2);
+    padding: 8px 14px;
+    border-radius: 2px;
+    flex: 1;
+  }
+  .speech strong { color: var(--white); }
+  .speech .note {
+    display: block;
+    font-size: 12px;
+    color: var(--blue);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* Step flow */
+  .step-flow {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .step-item {
+    background: var(--bg-card);
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .step-num {
+    font-size: 11px;
+    color: var(--red);
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+    min-width: 20px;
+  }
+  .step-content {}
+  .step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  .step-eg {
+    font-size: 13px;
+    color: var(--blue);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* Highlight list */
+  .highlight-list {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hl-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background: var(--bg-card);
+  }
+  .hl-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--red);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .hl-text {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.7;
+  }
+  .hl-text strong { color: var(--white); }
+  .hl-text .red { color: var(--red-light); }
+
+  /* Tabbed tip box */
+  .tip-box {
+    background: var(--bg-card2);
+    border: 1px solid var(--border2);
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .tip-box .tip-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .tip-box p {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.7;
+  }
+  .tip-box strong { color: var(--white); }
+
+  /* Two-col layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+  .two-col > * { background: var(--bg-card); }
+
+  /* Full-width divider */
+  .divider {
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 40px;
+  }
+  .divider hr {
+    border: none;
+    border-top: 1px solid var(--border2);
+  }
+
+  /* Checklist */
+  .checklist {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+  .checklist h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .checklist-sub {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 28px;
+  }
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+  }
+  .check-item {
+    background: var(--bg-card);
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .check-item:hover { background: var(--bg-card2); }
+  .check-item.done { opacity: 0.5; }
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border2);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .check-item.done .check-box {
+    background: var(--red);
+    border-color: var(--red);
+  }
+  .check-box svg { display: none; }
+  .check-item.done .check-box svg { display: block; }
+  .check-text {
+    font-size: 13px;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+  .check-text strong { color: var(--white); font-size: 14px; display: block; margin-bottom: 2px; }
+
+  /* Footer */
+  .footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border2);
+    padding: 32px 40px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .footer-line {
+    font-size: 13px;
+    color: var(--gray);
+    text-align: center;
+  }
+  .footer-phase {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .hero, .chapter-div, .content, .checklist { padding: 0 20px; }
+    .hero { padding-top: 56px; }
+    .compare-wrap { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .cards-row { grid-template-columns: 1fr; }
+    .hero-meta { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <span class="progress-label">第六阶段进度</span>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <span class="progress-count" id="progressCount">0 / 16</span>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="phase-tag">Phase 06 · Teambuilding & Atmosphere</div>
+  <h1>团建带动氛围<br><em>&</em> 活跃话题</h1>
+  <p class="hero-sub">一个好的教练不只会教动作，还能让每次上课都像一次聚会。你的气场能带动整个场馆的氛围，这是让客户主动续费、主动转介绍的隐性核心能力。</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-num">5<span>个章节</span></div>
+      <div class="meta-label">完整模块</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">12<span>+</span></div>
+      <div class="meta-label">情境模拟</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">2<span>小时</span></div>
+      <div class="meta-label">培训内容量</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CH01 · 为什么"气氛"也是你的核心能力
+     ══════════════════════════════════════════ -->
+<div class="chapter-div">
+  <div class="chapter-div-inner">
+    <div class="ch-num">CH · 01</div>
+    <div>
+      <div class="ch-title">氛围力：你最容易被忽视的核心能力</div>
+      <div class="ch-desc">很多教练觉得"活跃气氛"是性格问题，生下来就会或就不会。这是错的。带动氛围是一套可以学习的技能体系，就像发球技术一样。</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="section-label">你以为 vs 客户真实感受</div>
+
+  <div class="compare-wrap">
+    <div class="compare-col">
+      <div class="compare-header wrong">❌ 你以为客户最在乎的</div>
+      <div class="compare-item strike">你打球技术有多强</div>
+      <div class="compare-item strike">上课内容有多专业</div>
+      <div class="compare-item strike">讲解动作有多详细</div>
+      <div class="compare-item strike">纠错有多到位</div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-header right">✓ 客户实际在付费的</div>
+      <div class="compare-item"><strong>上课时有没有感觉被重视</strong></div>
+      <div class="compare-item"><strong>跟其他学员有没有建立连接</strong></div>
+      <div class="compare-item"><strong>离开时心情是不是比来时好</strong></div>
+      <div class="compare-item"><strong>会不会想跟朋友说"你要来试试"</strong></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <p>人们愿意续费的真正原因，60% 是"在这里感觉好"，40% 才是"觉得技术在进步"</p>
+    <div class="sub">这不是心灵鸡汤，是商业逻辑：感受是可重复购买的，技术进步是阶段性满足的。</div>
+  </div>
+
+  <div class="section-label">氛围力公式</div>
+
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-label">第一层</div>
+      <div class="card-title">存在感</div>
+      <div class="card-body">你在场时，学员能感受到你在关注他。不是每分钟都说话，而是<strong>你的目光、点头、一句"我看见你了"的回应</strong>。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">第二层</div>
+      <div class="card-title">连接感</div>
+      <div class="card-body">你帮学员跟学员之间建立连接。<strong>叫名字、挑起话题、创造共同笑点</strong>，让他们从陌生人变成球友。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">第三层</div>
+      <div class="card-title">成就感</div>
+      <div class="card-body">你帮每个人在这次课里找到<strong>至少一个"我做到了"的瞬间</strong>，哪怕只是接住一个特别难接的球。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">第四层</div>
+      <div class="card-title">留恋感</div>
+      <div class="card-body">课结束时学员不想走，或者走的时候说"下次见"而不是"好的谢谢"——<strong>这是氛围力的最高级表现</strong>。</div>
+    </div>
+  </div>
+
+  <div class="section-label">内向教练 vs 外向教练的误区</div>
+
+  <div class="body-text">
+    很多内向性格的教练会觉得：<span class="red">我不擅长搞气氛，我就老老实实教球吧。</span>这个想法有两个问题：
+  </div>
+
+  <div class="highlight-list">
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>带动氛围 ≠ 表演外向</strong>——安静、专注的存在感本身就是一种气场，不需要你变成一个综艺主持人</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>氛围感是有具体动作的</strong>——叫名字、课中一句到位的评论、结束时记住一件小事——这些都是可以刻意练习的行为</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>你的短板不是性格，是习惯</strong>——没有形成"带动氛围"的行为习惯，才是真正要解决的问题</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CH02 · 团建课带动氛围
+     ══════════════════════════════════════════ -->
+<div class="chapter-div">
+  <div class="chapter-div-inner">
+    <div class="ch-num">CH · 02</div>
+    <div>
+      <div class="ch-title">团建课带动氛围：从陌生人到一队人</div>
+      <div class="ch-desc">企业团建是你最容易拿到好口碑的场景，也是最容易搞砸的。这一章告诉你如何让一群互不认识的同事，在两小时内变成主动加微信的球友。</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="section-label">团建课的特殊性：你面对的不是普通学员</div>
+
+  <div class="body-text">
+    报名常规班的学员，是自己决定来学球的，有内在动机。<strong>团建学员不一样</strong>——他们很多是被公司"抓"来的，内心可能是：
+  </div>
+
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-label">心态类型A</div>
+      <div class="card-title">无所谓型</div>
+      <div class="card-body">"来都来了，玩玩吧。"这类人是你的<strong>盟友</strong>，先带动他们，其他人会跟着动。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">心态类型B</div>
+      <div class="card-title">不想丢脸型</div>
+      <div class="card-body">"我完全不会打球，待会被人笑怎么办。"要<strong>先降低心理门槛</strong>，让他知道出糗是正常的，是被允许的。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">心态类型C</div>
+      <div class="card-title">有点抗拒型</div>
+      <div class="card-body">"这种活动没意思。"不要硬拉，<strong>先给他一个安全感强的角色</strong>（比如让他帮忙当裁判），慢慢带入。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">心态类型D</div>
+      <div class="card-title">竞争心强型</div>
+      <div class="card-body">"我要赢。"这类人是你的<strong>氛围发动机</strong>，给他竞技场景，整组都会跟着燃起来。</div>
+    </div>
+  </div>
+
+  <div class="section-label">团建课开场：前5分钟决定全程氛围</div>
+
+  <div class="conclusion-box">
+    <p>前5分钟的质量 = 这两小时整体体验的80%</p>
+    <div class="sub">开场如果冷场，后面再努力也很难追回来。开场如果热起来了，后面就算出了小插曲大家也不会在意。</div>
+  </div>
+
+  <div class="step-flow">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">到场就叫名字，不要等集合</div>
+        <div class="step-desc">人陆续到的时候，每个人进来你就迎上去，叫名字（提前看名单）或者主动问。"你是小李对吗？欢迎欢迎，球拍先放这里，来加一下我微信。"</div>
+        <div class="step-eg">目的：让每个人进门的第一秒就感受到"这个教练知道我是谁"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">开场三句话：降门槛 + 定基调 + 制造期待</div>
+        <div class="step-desc">正式开始时，站在中间说这三句话，语气要轻松、不严肃：<br>
+        "今天没有考试，打错了不扣分，打好了我来叫好——" （降门槛）<br>
+        "我们不追求技术，我们追求好玩——" （定基调）<br>
+        "今天结束你们会发现，匹克球比你们想象的容易上手很多——" （制造期待）
+        </div>
+        <div class="step-eg">语气说得越轻松，开场越管用。不要读稿，要像跟朋友说话</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">设计一个"全员参与"的破冰小游戏</div>
+        <div class="step-desc">不要直接开始教动作。先用1-2分钟让所有人动起来、笑起来。最简单有效的方式：让大家站成一圈，每人说一下"我对匹克球最好奇的一件事是什么"，或者做一个"我完全不会打球"请举手，结果发现大家都举手，立刻破冰。</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">给全组起一个名字</div>
+        <div class="step-desc">正式开始前，让大家给今天这个临时队伍起个名字。不管叫什么都夸一下。"哇，'飞天匹克'，这个名字我喜欢，今天结束我们就是一个队了。" 这一步让他们产生集体身份认同，后面带氛围事半功倍。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 01：有人开始刷手机，脱离了团队</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 团建进行到一半，有人开始刷手机</span>
+      <span class="dialogue-tag">踩坑版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker">教练</div>
+        <div class="speech">"那边那个，能不能先把手机放一下，我们在上课。"</div>
+      </div>
+      <div class="line">
+        <div class="speaker">结果</div>
+        <div class="speech">气氛瞬间变尴尬，那个人不高兴，其他人也有点不安，全场沉默。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 团建进行到一半，有人开始刷手机</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"王哥，我们接下来要分队，你是哪边的主力？我给你排第一个。"
+          <span class="note">直接拉他进来，给他一个"被需要"的角色，不提手机的事</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker">王哥</div>
+        <div class="speech">"啊？主力？我哪行……"</div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"没关系，今天主力就是最勇敢上场的那个，你来。"
+          <span class="note">让他有台阶下，同时其他人也因为这个互动笑起来了</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 02：有人怎么都学不会，开始尴尬</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 有学员反复打失误，开始低头、不想参与</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"你这个方向感特别好，你看你每次都打到对的区域，只是力度再稍微控一下。"
+          <span class="note">先肯定一个真实的优点，让他的注意力从"我好差"转移到"我还有优点"</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（对全组）"匹克球有一个特点，越焦虑越打不好，越放松越能打——来，下一球不要想结果，就看球，大家给他加油。"
+          <span class="note">把压力从个人转移到全场，给他一个支持的环境</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（打好了之后）"看！我就说了吧！你们听到那个声音没有，那一球的声音是今天最干净的一球！"
+          <span class="note">夸张化地庆祝，让那个人有高光时刻，全场都会跟着嗨</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">课中节奏控制：什么时候加热，什么时候降温</div>
+
+  <div class="highlight-list">
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>加热时机：</strong>刚开始时（要让大家快速入状态）、有人打出好球时（马上放大庆祝）、比赛环节时（制造竞争感，用音量和语速带节奏）</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>降温时机：</strong>讲规则时（节奏放慢，说清楚）、有人受伤时（立刻变稳定，不要慌）、有矛盾或争执时（先笑化，再私下解决）</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>关键工具：音量和语速</strong>——你的声音是整场氛围的温度计。嗨的时候声音大、语速快；安静的时候语速慢、音量降。学员会无意识跟着你的节奏走。</div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 03：竞赛环节，有一队分差越来越大，失意方开始丧气</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 比赛一边倒，落后队的人开始有点沮丧</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（面向落后队）"等等，我要替你们说句公道话——你们这边今天上场勇气是第一名的，我数了，你们主动发球次数比他们多三次。"
+          <span class="note">用"勇气榜"等另一个维度重新定义价值感，让他们找到新的尊严点</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"我们最后一局用新规则——落后方每得一分算两分。现在差距是多少来着？3比8？刚好，两局翻盘。"
+          <span class="note">改规则让比赛重新有悬念，所有人重新投入</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CH03 · 常规课带动气氛
+     ══════════════════════════════════════════ -->
+<div class="chapter-div">
+  <div class="chapter-div-inner">
+    <div class="ch-num">CH · 03</div>
+    <div>
+      <div class="ch-title">常规班气氛带动：让每堂课都像老朋友聚会</div>
+      <div class="ch-desc">团建是爆发式氛围，常规班是持续性温度。不一样的场景，需要不一样的策略。</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="section-label">常规班气氛的核心：记住每个人的"专属细节"</div>
+
+  <div class="body-text">
+    普通教练记住学员的名字。优秀教练记住学员的<strong>专属细节</strong>——他们上次说的话、他们的进步点、他们生活里发生的事。
+  </div>
+
+  <div class="highlight-list">
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>记一件他上次说的事：</strong>"上次你说你要去出差，回来了？出差怎么样？" 这句话10秒钟，但对学员来说意味着"教练把我当成一个完整的人在关注，不只是一张课时票"</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>记一个他的技术进步点：</strong>"你上次那个正手你回去练了吗？今天我特别想看一下。" 让他感受到他的进步被看见，来上课是有意义的</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-dot"></div>
+      <div class="hl-text"><strong>学员互相介绍：</strong>新学员来的时候，主动帮他跟老学员介绍——"这是小美，上次跟你说的那个之前打羽毛球的，你们聊一下。" 你在帮学员建立社交网络，他对这个班的黏性会大幅提高</div>
+    </div>
+  </div>
+
+  <div class="section-label">七个话题激活工具：随时能点燃气氛的话题模板</div>
+
+  <div class="step-flow">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">比较话题</div>
+        <div class="step-desc">对全组说："你们觉得匹克球比乒乓球难还是比网球难？" 没有标准答案，每个人都有话说，自然聊起来。</div>
+        <div class="step-eg">适用时机：热身时、等人到齐时、训练间隙</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">进步话题</div>
+        <div class="step-desc">在课中点出某个学员的进步："你们注意到小张今天的反手了吗？三周前他这个动作还完全不对，现在看——" 其他学员也会跟着关注，形成正向的集体关注。</div>
+        <div class="step-eg">注意：要夸具体动作，不要泛泛说"你今天打得不错"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">最糗话题</div>
+        <div class="step-desc">分享一个你自己的糗事，或者邀请大家分享"今天打的最糗的一球"。自嘲和分享窘境是最快建立亲密感的方式，笑点越低含金量越高。</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">悬念话题</div>
+        <div class="step-desc">"下次课我要带一个特别奇怪的训练方法，你们猜猜是什么。"或者"今天结束我告诉你们一个很多人不知道的匹克球小技巧。" 制造期待感，让人想来下次课。</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title">打赌话题</div>
+        <div class="step-desc">"你们猜这球我打得进去吗？" 或者设置一个小赌注："要是他这球接住了，今天课后大家拍一张大合照。" 竞猜游戏让旁观者也变成参与者。</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <div class="step-title">角色话题</div>
+        <div class="step-desc">给学员贴一个好玩的、正向的标签。"小王你就是我们班的防守王，没有人比你守得稳。" 标签让人有身份感，会自我驱动去维护这个人设。</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">07</div>
+      <div class="step-content">
+        <div class="step-title">传承话题</div>
+        <div class="step-desc">让老学员帮新学员。"小李，你来的时间最长，你跟新来的小美讲一下你刚开始的时候是怎么练反手的。" 老学员有成就感，新学员感受到被接纳，你省力，氛围也起来了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 04：小团体课，两个人总聊天，另外两个人被冷落</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 4人小团课，2人是老朋友一直聊天，另2人插不上话</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（对被冷落的学员）"对了，你上次说你在外企工作？你们公司打匹克球多不多？"
+          <span class="note">找到他的话题切入点，先把他激活</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker">学员C</div>
+        <div class="speech">"还挺多的，我们公司现在很多人在打……"</div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（把这个话题抛给聊天的两人）"你们听听，他们公司氛围看起来比咱们这个班还好——"
+          <span class="note">用"我们"把四个人拉到同一阵营，聊天的两人自然把注意力转移过来</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"来来来，你们四个人待会做一个接力游戏，按我说的顺序来，让我看看你们四个人配合怎么样。"
+          <span class="note">用任务把他们变成一个临时小队，物理上打破小圈子的隔离</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 05：课后大家都想走，没人留下来</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 课结束，大家打算各自散了，教练想留住一点气氛</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"等一下，今天我要颁一个最佳进步奖——我觉得是小张，你们觉得呢？"
+          <span class="note">用"颁奖"制造一个小仪式，让大家在走之前有个共同焦点，自然延长留场时间</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"你们加一下彼此微信没有？下次有人临时缺人可以互相叫。"
+          <span class="note">用一个实用的理由让学员们互加微信，你也顺势加进这个微信群，形成社群</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">（拍一张合照）"我发到我们的群里，你们到时候可以直接发朋友圈。"
+          <span class="note">内容帮他们做好了，朋友圈发出去你的课自然就有了口碑传播</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CH04 · 成人私教课情绪价值
+     ══════════════════════════════════════════ -->
+<div class="chapter-div">
+  <div class="chapter-div-inner">
+    <div class="ch-num">CH · 04</div>
+    <div>
+      <div class="ch-title">成人私教：情绪价值是溢价核心</div>
+      <div class="ch-desc">成人私教和少儿课不一样——成人付更多钱，他们期待的不只是技术，是"被专业对待的感受"。这章告诉你如何在每节课里制造这种感受。</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="section-label">成人真正在买什么</div>
+
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-label">表层需求</div>
+      <div class="card-title">技术提升</div>
+      <div class="card-body">他们说的：想把正手练好、想参加比赛、想不再被朋友完虐。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">中层需求</div>
+      <div class="card-title">效率感</div>
+      <div class="card-body">他们不说的：我花了这么多钱，每次课要有"我在进步"的感受，不然觉得亏了。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">深层需求</div>
+      <div class="card-title">被尊重的感受</div>
+      <div class="card-body">他们最不说的：<strong>在这里我想被当作一个有品味、有能力的成年人来对待，不要觉得我是个什么都不懂的初学者。</strong></div>
+    </div>
+  </div>
+
+  <div class="section-label">开课前2分钟：设置这节课的"专属感"</div>
+
+  <div class="body-text">
+    大多数教练开课就直接开始练。优秀教练先用2分钟<strong>告诉学员这节课是为他专门设计的</strong>。
+  </div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>开课两分钟话术示范</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"我今天把上次你的反手视频回看了一下，我发现你的问题不是力量，是击球点的位置——"
+          <span class="note">告诉他你回看了他的录像，他会立刻感受到"我被认真对待了"</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"所以今天我准备了一个专门针对这个问题的训练序列，等你练完你会有很明显的感觉。我们今天就专门搞定这一件事。"
+          <span class="note">"今天就搞定这一件事"——聚焦感让人觉得钱花得值</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">课中话术：三类关键时刻怎么说</div>
+
+  <div class="step-flow">
+    <div class="step-item">
+      <div class="step-num">A</div>
+      <div class="step-content">
+        <div class="step-title">他打出一个好球时</div>
+        <div class="step-desc">不要只说"好！""不错！"——这是无效表扬。要说出具体是哪里好。</div>
+        <div class="step-eg">好的说法："就是这个，你看到你这次击球点比上次往前了至少10厘米，这才是正确的位置，你能感受到吗？"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">B</div>
+      <div class="step-content">
+        <div class="step-title">他打了一个烂球时</div>
+        <div class="step-desc">不要沉默（让他自己尴尬），也不要马上纠错（让他觉得自己笨）。先承接情绪，再给出分析。</div>
+        <div class="step-eg">好的说法："这球你感觉到哪里不对了吗？——你说得基本对，就是收拍的时机，这个很多人在这里都会卡，不是你的问题，我来告诉你我的方法。"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">C</div>
+      <div class="step-content">
+        <div class="step-title">他今天状态不好时</div>
+        <div class="step-desc">不要假装没看出来，更不要催他"再练一次"。要主动说出来，给他权力决定怎么继续。</div>
+        <div class="step-eg">好的说法："我感觉你今天可能状态不太在线，正常，每个人都有这种时候。我们要不要换一个方式——今天不追技术，就做一些找球感的练习，可以吗？"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 06：成人学员说"我感觉我打了这么久一点进步都没有"</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 学员打了几个月，开始产生怀疑和挫败感</span>
+      <span class="dialogue-tag">踩坑版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker">教练</div>
+        <div class="speech">"没有啊，你已经进步很多了，你刚来的时候更差的。"</div>
+      </div>
+      <div class="line">
+        <div class="speaker">结果</div>
+        <div class="speech">学员感受到：他在安慰我，不是真的。这种含糊的安慰解决不了问题，甚至会加重不信任感。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 学员打了几个月，开始产生怀疑和挫败感</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"这个感受我理解，匹克球有个特点叫'高原期'——进步不是线性的，会有一段时间你感觉原地踏步，然后突然就跨过去了。"
+          <span class="note">给他的感受一个专业命名，让他知道这是正常现象</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"但我告诉你一个具体的事实——你第一节课跟我打，你接不了侧面来球，今天你接了几个？"</div>
+      </div>
+      <div class="line">
+        <div class="speaker">学员</div>
+        <div class="speech">"好像……还挺多的……"</div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"对，这就是进步，只是因为你已经习惯了，所以感受不到了。感受不到进步，有时候是因为那个动作已经进了你的身体，不需要再想了——这其实是更高级的进步。"
+          <span class="note">用具体事实+逻辑解释，这比安慰更有说服力，学员会真正被说服</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 07：成人学员问"我适合练到什么程度"</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 成人学员想知道自己的上限和方向感</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"这个问题好，说明你在认真想这件事。我直接给你一个我的判断。"
+          <span class="note">先给他一个"我很认真对待这个问题"的信号</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"你目前最大的优势是……（说一个真实的优点），你目前最主要的瓶颈是……（说一个具体的点）。"</div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"以你现在的投入频率，3个月后你可以达到……（给一个具体的目标描述）。如果你想更快，你需要……（给一个具体的建议）。你自己怎么想？"
+          <span class="note">把路径说清楚，给他选择权，而不是给他一个模糊的鼓励</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CH05 · 社群氛围与口碑转化
+     ══════════════════════════════════════════ -->
+<div class="chapter-div">
+  <div class="chapter-div-inner">
+    <div class="ch-num">CH · 05</div>
+    <div>
+      <div class="ch-title">社群氛围与口碑转化：让学员帮你做推广</div>
+      <div class="ch-desc">最好的营销是学员自己说"你要去找我教练"。这一章讲的是如何在平时的互动中埋下这颗种子。</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="section-label">口碑转介绍的触发逻辑</div>
+
+  <div class="body-text">
+    人什么时候会主动推荐一个教练？不是"技术好"的时候，是<span class="red">"有了一个值得说的故事"</span>的时候。
+  </div>
+
+  <div class="step-flow">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">给他一个"第一次"的高光时刻</div>
+        <div class="step-desc">人会把"我第一次……"的时刻讲给别人听。你的任务是制造这个时刻，然后帮他意识到"这是你的第一次"。</div>
+        <div class="step-eg">"你知道吗，这是你第一次在对练里把我甩开的——我不是让着你。"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">制造"这里跟别的地方不一样"的感知</div>
+        <div class="step-desc">让学员感受到，这个场馆、这个班有一种其他地方没有的氛围或文化。这种独特性是他们愿意介绍朋友来的核心动机。</div>
+        <div class="step-eg">定期给班级起名字、建群、有小传统（比如每次课后一张合影），都是在建立独特性</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">帮他有"我帮到了朋友"的感觉</div>
+        <div class="step-desc">他把朋友介绍来之后，如果朋友觉得好，他会很有面子。你要提前告诉他："你介绍来的朋友第一节课我会特别关注他，让他感受到好。"</div>
+        <div class="step-eg">转介绍完成后，主动跟介绍人说"你朋友今天表现很好，你眼光不错"</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">课后内容素材：帮他发朋友圈</div>
+        <div class="step-desc">你在场馆里帮他拍几张动作好看的照片或者短视频，他发朋友圈的可能性是你跟他说"欢迎介绍朋友来"的10倍。</div>
+        <div class="step-eg">拍照时说："我帮你拍一张，这个动作特别好看，你可以发朋友圈。"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">微信群运营：让课后氛围延续</div>
+
+  <div class="compare-wrap">
+    <div class="compare-col">
+      <div class="compare-header wrong">❌ 死气沉沉的群</div>
+      <div class="compare-item strike">只有通知：下次课时间是……</div>
+      <div class="compare-item strike">只有教练发言，学员不互动</div>
+      <div class="compare-item strike">课后沉默，什么都不发</div>
+      <div class="compare-item strike">发广告感强的课程推荐</div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-header right">✓ 有生命力的群</div>
+      <div class="compare-item"><strong>课后发一条进步总结</strong>（@具体学员名字）</div>
+      <div class="compare-item"><strong>发一个今天有趣的瞬间</strong>（合照/搞笑失误截图）</div>
+      <div class="compare-item"><strong>投票/小游戏</strong>（"下次课谁来挑战教练"）</div>
+      <div class="compare-item"><strong>节日问候 + 一句话球技贴士</strong></div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 08：学员说"我同事想来试试，你有没有什么好说的"</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 学员帮你介绍朋友，问你怎么说</span>
+      <span class="dialogue-tag ok">正确版：给学员"安利话术"</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"谢谢你！我给你说几句你可以转告他的话——"</div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"你就说：'完全零基础也可以来，第一节课就能打起来，教练会根据你的情况调整，不用担心跟不上。而且这里的人都挺好的，不会让你有压力。'"
+          <span class="note">帮学员把安利话术说清楚，他转告的时候更有底气，朋友来的可能性大幅提高</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"他来之前告诉我一声，我来的时候会多关注一下他，让他第一次就有好体验。"
+          <span class="note">让介绍人放心：他朋友会被好好对待，他的面子也被维护了</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">情境模拟 09：团建结束，客户说"挺好的，我们下次还来"</div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 团建结束，客户给了正面反馈但没有后续</span>
+      <span class="dialogue-tag">踩坑版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker">教练</div>
+        <div class="speech">"好的好的，欢迎下次再来！" 然后就没有然后了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialogue-wrap">
+    <div class="dialogue-header">
+      <span>情境 · 团建结束，客户给了正面反馈但没有后续</span>
+      <span class="dialogue-tag ok">正确版</span>
+    </div>
+    <div class="dialogue-body">
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"谢谢，大家今天的状态特别好——我来问一下，你们里面有几个打得不错的，如果有人感兴趣的话，我可以给你们搭一个进阶的小课，你们自己组4个人就可以开，不用跟别的班合，你看这个有没有需求？"
+          <span class="note">趁热打铁，把一次性团建转化成常规班的潜客，而且用"你们自己组队"的方式降低决策门槛</span>
+        </div>
+      </div>
+      <div class="line">
+        <div class="speaker coach">教练</div>
+        <div class="speech">"我先把今天的照片整理好发给你，你们可以发公司群，让更多同事看到——"
+          <span class="note">帮对方制造公司内部的传播，下次有团建活动他第一个会想到你</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">最后一条：关于"自然"这件事</div>
+
+  <div class="conclusion-box">
+    <p>所有话术练到最后，都要忘掉话术本身</p>
+    <div class="sub">你现在需要练话术，是因为还没有形成本能反应。当你练够了100次，你就不再需要想"这时候应该说什么"——你只是说了，因为那就是你。这才是真正的氛围力。</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-label">本阶段核心总结</div>
+    <p>团建课 → <strong>用破冰+任务+颁奖仪式</strong>把陌生人变成一队人<br>
+    常规班 → <strong>记专属细节+七个话题工具</strong>让每次课都像老友聚会<br>
+    私教课 → <strong>专属感开场+精准表扬+情绪接住</strong>让成人觉得钱花得值<br>
+    社群&口碑 → <strong>制造高光时刻+帮他安利话术</strong>让学员主动推荐你</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHECKLIST
+     ══════════════════════════════════════════ -->
+<div class="checklist">
+  <h2>本阶段学习打卡</h2>
+  <p class="checklist-sub">完成一项就点击打卡，顶部进度条会更新</p>
+  <div class="checklist-grid" id="checklistGrid">
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>理解氛围力公式</strong>存在感→连接感→成就感→留恋感</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>掌握四类团建学员的心态识别</strong>无所谓/不想丢脸/抗拒/竞争</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>背熟开场三句话</strong>降门槛+定基调+制造期待</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习：有人刷手机时的应对</strong>不是叫停，是拉他进来</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习：有人反复失误时的话术</strong>找优点→解压→制造高光</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>理解音量和语速是氛围温控工具</strong>能有意识地切换</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>背熟七个话题激活工具</strong>随时能找到一个话题切入点</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习：小团体课有小圈子时怎么打破</strong>找外圈话题+任务合并</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>理解成人三层需求</strong>技术/效率感/被尊重的感受</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习私教开课两分钟话术</strong>告诉他这节课是为他专门设计的</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习："感觉没进步"的应对话术</strong>高原期+具体事实+逻辑解释</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>理解口碑转介绍触发逻辑</strong>值得说的故事 > 技术好</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习：给学员"安利话术"</strong>帮他说清楚怎么介绍你</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>理解微信群运营的有效 vs 无效内容</strong>发故事/合影/互动，不发通知/广告</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>练习：团建结束后转化常规班的话术</strong>趁热打铁不等人冷却</div>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="check-text"><strong>记住：所有话术练到最后要忘掉话术</strong>那时你只是在做你自己</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-phase">第六阶段完成 · 共六阶段</div>
+  <div class="footer-line">恭喜完成全部系统化培训 · 现在是时候让这些变成你的本能</div>
+</div>
+
+<script>
+  const TOTAL = 16;
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.check-item.done').length;
+    document.getElementById('progressFill').style.width = (done / TOTAL * 100) + '%';
+    document.getElementById('progressCount').textContent = done + ' / ' + TOTAL;
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
